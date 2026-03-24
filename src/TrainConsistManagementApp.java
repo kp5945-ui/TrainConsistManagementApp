@@ -1,24 +1,18 @@
-import java.util.LinkedList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-public class  TrainConsistManagementApp{
+public class TrainConsistManagementApp {
     public static void main(String[] args) {
         System.out.println("=== Train Consist Management App ===");
 
-        LinkedList<String> trainConsist = new LinkedList<>();
+        Set<String> trainFormation = new LinkedHashSet<>();
 
-        trainConsist.add("Engine");
-        trainConsist.add("Sleeper");
-        trainConsist.add("AC");
-        trainConsist.add("Cargo");
-        trainConsist.add("Guard");
+        trainFormation.add("Engine");
+        trainFormation.add("Sleeper");
+        trainFormation.add("Cargo");
+        trainFormation.add("Guard");
+        trainFormation.add("Sleeper"); // duplicate attempt
 
-        trainConsist.add(2, "Pantry Car");
-
-        System.out.println("Train consist after insertion: " + trainConsist);
-
-        trainConsist.removeFirst();
-        trainConsist.removeLast();
-
-        System.out.println("Final ordered train consist: " + trainConsist);
+        System.out.println("Final train formation: " + trainFormation);
     }
 }
