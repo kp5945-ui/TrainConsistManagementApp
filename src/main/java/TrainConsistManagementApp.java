@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Train Consist Management App
- * UC7: Sort Bogies Using Comparator
+ * UC7: Sort Bogies by Capacity (Comparator)
  */
 
 /**
@@ -40,16 +40,15 @@ public class TrainConsistManagementApp {
         System.out.println("=== Train Consist Management App ===");
         System.out.println();
 
-        // UC7: Sort Bogies Using Comparator
-        System.out.println("--- UC7: Sort Bogies Using Comparator ---");
+        // UC7: Sort Bogies by Capacity (Comparator)
+        System.out.println("--- UC7: Sort Bogies by Capacity (Comparator) ---");
         System.out.println();
 
         // Create a List<Bogie> to store bogies
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 96));
+        bogies.add(new Bogie("AC Chair", 56));
         bogies.add(new Bogie("First Class", 48));
-        bogies.add(new Bogie("General", 120));
 
         // Display unsorted bogies
         System.out.println("Unsorted bogies:");
