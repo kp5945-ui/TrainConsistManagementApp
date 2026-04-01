@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * JUnit tests for TrainConsistManagementApp
- * UC12: Sort Bogies Using Comparator
+ * UC13: Sort Bogies Using Comparator
  */
 public class TrainConsistManagementAppTest {
 
