@@ -2,11 +2,12 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
  * JUnit tests for TrainConsistManagementApp
- * UC8: Filter Passenger Bogies Using Streams
+ * UC9: Group Bogies by Capacity Range Using Streams
  */
 public class TrainConsistManagementAppTest {
 
@@ -24,39 +25,30 @@ public class TrainConsistManagementAppTest {
     }
 
     @Test
-    public void testStreamFiltering() {
+    public void testStreamGrouping() {
         List<Bogie> bogies = new ArrayList<>();
+        bogies.add(new Bogie("First Class", 48));
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 96));
-        bogies.add(new Bogie("First Class", 48));
+        bogies.add(new Bogie("General", 120));
 
-        List<Bogie> filtered = bogies.stream()
-                .filter(b -> b.getCapacity() > 60)
-                .collect(Collectors.toList());
+        Map<String, List<Bogie>> grouped = bogies.stream()
+                .collect(Collectors.groupingBy(b -> {
+                    if (b.getCapacity() <= 50) return "Small (≤50)";
+                    else if (b.getCapacity() <= 100) return "Medium (51-100)";
+                    else return "Large (>100)";
+                }));
 
-        assertEquals(2, filtered.size());
-        assertEquals("Sleeper", filtered.get(0).getName());
-        assertEquals("AC Chair", filtered.get(1).getName());
+        assertEquals(1, grouped.get("Small (≤50)").size());
+        assertEquals(2, grouped.get("Medium (51-100)").size());
+        assertEquals(1, grouped.get("Large (>100)").size());
     }
 
     @Test
-    public void testStreamFilteringNoMatch() {
+    public void testEmptyListGrouping() {
         List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("First Class", 48));
-
-        List<Bogie> filtered = bogies.stream()
-                .filter(b -> b.getCapacity() > 60)
-                .collect(Collectors.toList());
-
-        assertTrue(filtered.isEmpty());
-    }
-
-    @Test
-    public void testEmptyListFiltering() {
-        List<Bogie> bogies = new ArrayList<>();
-        List<Bogie> filtered = bogies.stream()
-                .filter(b -> b.getCapacity() > 60)
-                .collect(Collectors.toList());
-        assertTrue(filtered.isEmpty());
+        Map<String, List<Bogie>> grouped = bogies.stream()
+                .collect(Collectors.groupingBy(b -> "Group"));
+        assertTrue(grouped.isEmpty());
     }
 }
