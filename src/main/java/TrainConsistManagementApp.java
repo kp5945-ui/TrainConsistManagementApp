@@ -1,10 +1,10 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Train Consist Management App
- * UC7: Sort Bogies Using Comparator
+ * UC8: Filter Passenger Bogies Using Streams
  */
 
 /**
@@ -40,56 +40,48 @@ public class TrainConsistManagementApp {
         System.out.println("=== Train Consist Management App ===");
         System.out.println();
 
-        // UC7: Sort Bogies Using Comparator
-        System.out.println("--- UC7: Sort Bogies Using Comparator ---");
+        // UC8: Filter Passenger Bogies Using Streams
+        System.out.println("--- UC8: Filter Passenger Bogies Using Streams ---");
         System.out.println();
 
-        // Create a List<Bogie> to store bogies
+        // Create a List<Bogie> to store passenger bogies
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 96));
         bogies.add(new Bogie("First Class", 48));
-        bogies.add(new Bogie("General", 120));
 
-        // Display unsorted bogies
-        System.out.println("Unsorted bogies:");
+        // Display all bogies
+        System.out.println("All passenger bogies:");
         for (int i = 0; i < bogies.size(); i++) {
             System.out.println((i + 1) + ". " + bogies.get(i));
         }
         System.out.println();
 
-        // Sort bogies by capacity in ascending order using Comparator
-        System.out.println("Sorting bogies by capacity (ascending)...");
-        bogies.sort(Comparator.comparingInt(Bogie::getCapacity));
-        System.out.println("Sorting completed.");
+        // Filter bogies with capacity > 60 using streams
+        System.out.println("Filtering bogies with seating capacity > 60...");
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
+        System.out.println("Filtering completed.");
         System.out.println();
 
-        // Display sorted bogies
-        System.out.println("Sorted bogies (by capacity ascending):");
-        for (int i = 0; i < bogies.size(); i++) {
-            System.out.println((i + 1) + ". " + bogies.get(i));
+        // Display filtered bogies
+        System.out.println("Filtered bogies (capacity > 60):");
+        if (filteredBogies.isEmpty()) {
+            System.out.println("No bogies match the filter criteria.");
+        } else {
+            for (int i = 0; i < filteredBogies.size(); i++) {
+                System.out.println((i + 1) + ". " + filteredBogies.get(i));
+            }
         }
         System.out.println();
 
-        // Sort by capacity descending
-        System.out.println("Sorting bogies by capacity (descending)...");
-        bogies.sort(Comparator.comparingInt(Bogie::getCapacity).reversed());
-        System.out.println("Sorting completed.");
-        System.out.println();
-
-        // Display sorted bogies descending
-        System.out.println("Sorted bogies (by capacity descending):");
-        for (int i = 0; i < bogies.size(); i++) {
-            System.out.println((i + 1) + ". " + bogies.get(i));
-        }
-        System.out.println();
-
-        System.out.println("Key Benefits of Comparator:");
-        System.out.println("✓ Flexible sorting without modifying the class");
-        System.out.println("✓ Chain comparators for multiple criteria");
-        System.out.println("✓ Reusable and composable");
-        System.out.println("✓ Improves code readability and maintainability");
-        System.out.println("✓ Supports both ascending and descending order");
+        System.out.println("Key Benefits of Stream API:");
+        System.out.println("✓ Declarative filtering without manual loops");
+        System.out.println("✓ Concise and readable business logic");
+        System.out.println("✓ Functional programming style");
+        System.out.println("✓ Improves code maintainability");
+        System.out.println("✓ Prepares for advanced stream operations");
         System.out.println();
 
         System.out.println("Program continues...");

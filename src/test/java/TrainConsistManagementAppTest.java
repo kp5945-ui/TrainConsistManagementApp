@@ -1,12 +1,12 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * JUnit tests for TrainConsistManagementApp
- * UC7: Sort Bogies Using Comparator
+ * UC8: Filter Passenger Bogies Using Streams
  */
 public class TrainConsistManagementAppTest {
 
@@ -24,37 +24,39 @@ public class TrainConsistManagementAppTest {
     }
 
     @Test
-    public void testComparatorSortingAscending() {
+    public void testStreamFiltering() {
         List<Bogie> bogies = new ArrayList<>();
-        bogies.add(new Bogie("First Class", 48));
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 96));
+        bogies.add(new Bogie("First Class", 48));
 
-        bogies.sort(Comparator.comparingInt(Bogie::getCapacity));
+        List<Bogie> filtered = bogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
 
-        assertEquals(48, bogies.get(0).getCapacity());
-        assertEquals(72, bogies.get(1).getCapacity());
-        assertEquals(96, bogies.get(2).getCapacity());
+        assertEquals(2, filtered.size());
+        assertEquals("Sleeper", filtered.get(0).getName());
+        assertEquals("AC Chair", filtered.get(1).getName());
     }
 
     @Test
-    public void testComparatorSortingDescending() {
+    public void testStreamFilteringNoMatch() {
         List<Bogie> bogies = new ArrayList<>();
         bogies.add(new Bogie("First Class", 48));
-        bogies.add(new Bogie("Sleeper", 72));
-        bogies.add(new Bogie("AC Chair", 96));
 
-        bogies.sort(Comparator.comparingInt(Bogie::getCapacity).reversed());
+        List<Bogie> filtered = bogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
 
-        assertEquals(96, bogies.get(0).getCapacity());
-        assertEquals(72, bogies.get(1).getCapacity());
-        assertEquals(48, bogies.get(2).getCapacity());
+        assertTrue(filtered.isEmpty());
     }
 
     @Test
-    public void testEmptyListSorting() {
+    public void testEmptyListFiltering() {
         List<Bogie> bogies = new ArrayList<>();
-        bogies.sort(Comparator.comparingInt(Bogie::getCapacity));
-        assertTrue(bogies.isEmpty());
+        List<Bogie> filtered = bogies.stream()
+                .filter(b -> b.getCapacity() > 60)
+                .collect(Collectors.toList());
+        assertTrue(filtered.isEmpty());
     }
 }
