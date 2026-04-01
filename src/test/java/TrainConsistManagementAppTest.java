@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * JUnit tests for TrainConsistManagementApp
  * UC7: Sort Bogies by Capacity (Comparator)
+ * UC8: Filter Passenger Bogies Using Streams
  */
 public class TrainConsistManagementAppTest {
 
