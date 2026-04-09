@@ -1,34 +1,55 @@
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+class PassengerBogie {
+    private String type;
+    private int capacity;
+
+    public PassengerBogie(String type, int capacity) {
+        this.type = type;
+        this.capacity = capacity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getType() {
+        return type;
+    }
+}
 
 public class TrainConsistManagementApp {
+
+    public static void bubbleSort(PassengerBogie[] bogies) {
+        int n = bogies.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                if (bogies[j].getCapacity() > bogies[j + 1].getCapacity()) {
+                    PassengerBogie temp = bogies[j];
+                    bogies[j] = bogies[j + 1];
+                    bogies[j + 1] = temp;
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println("=== Train Consist Management App ===");
+        PassengerBogie[] bogies = {
+                new PassengerBogie("Sleeper", 72),
+                new PassengerBogie("AC Chair", 56),
+                new PassengerBogie("First Class", 24),
+                new PassengerBogie("Sleeper", 70),
+                new PassengerBogie("AC Chair", 60)
+        };
 
-        Map<String, Integer> bogieCapacity = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter number of bogies to add: ");
-        int count = scanner.nextInt();
-        scanner.nextLine();
-
-        for (int i = 1; i <= count; i++) {
-            System.out.print("Enter bogie name: ");
-            String name = scanner.nextLine();
-
-            System.out.print("Enter capacity for " + name + ": ");
-            int capacity = scanner.nextInt();
-            scanner.nextLine();
-
-            bogieCapacity.put(name, capacity);
+        System.out.println("Original Capacities:");
+        for (PassengerBogie b : bogies) {
+            System.out.print(b.getCapacity() + " ");
         }
 
-        System.out.println("\nBogie Capacity Details:");
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue() + " seats");
-        }
+        bubbleSort(bogies);
 
-        scanner.close();
+        System.out.println("\nSorted Capacities:");
+        for (PassengerBogie b : bogies) {
+            System.out.print(b.getCapacity() + " ");
+        }
     }
 }
