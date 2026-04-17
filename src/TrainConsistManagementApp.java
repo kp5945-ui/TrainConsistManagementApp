@@ -1,53 +1,44 @@
-<<<<<<< HEAD
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TrainConsistManagementApp {
-    public static void main(String[] args) {
-        System.out.println("=== Train Consist Management App ===");
+public class TrainConsistManagementAppTest {
 
-        Map<String, Integer> bogieCapacity = new HashMap<>();
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Enter number of bogies to add: ");
-        int count = scanner.nextInt();
-        scanner.nextLine();
-
-        for (int i = 1; i <= count; i++) {
-            System.out.print("Enter bogie name: ");
-            String name = scanner.nextLine();
-
-            System.out.print("Enter capacity for " + name + ": ");
-            int capacity = scanner.nextInt();
-            scanner.nextLine();
-
-            bogieCapacity.put(name, capacity);
-        }
-
-        System.out.println("\nBogie Capacity Details:");
-        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
-            System.out.println(entry.getKey() + " -> " + entry.getValue() + " seats");
-        }
-
-        scanner.close();
-=======
-public class TrainConsistManagementApp {
-
-    public static boolean searchBogie(String[] bogies, String key) {
-        for (String b : bogies) {
-            if (b.equals(key)) {
-                return true;
-            }
-        }
-        return false;
+    @Test
+    public void testSearch_ThrowsExceptionWhenEmpty() {
+        TrainConsistManagementApp app = new TrainConsistManagementApp();
+        assertThrows(IllegalStateException.class, () -> app.searchBogie("BG101"));
     }
 
-    public static void main(String[] args) {
-        String[] bogies = {"BG101","BG205","BG309","BG412","BG550"};
+    @Test
+    public void testSearch_AllowsSearchWhenDataExists() {
+        TrainConsistManagementApp app = new TrainConsistManagementApp();
+        app.addBogie("BG101");
+        app.addBogie("BG205");
+        assertDoesNotThrow(() -> app.searchBogie("BG101"));
+    }
 
-        System.out.println(searchBogie(bogies, "BG309"));
-        System.out.println(searchBogie(bogies, "BG999"));
->>>>>>> feature/UC18
+    @Test
+    public void testSearch_BogieFoundAfterValidation() {
+        TrainConsistManagementApp app = new TrainConsistManagementApp();
+        app.addBogie("BG101");
+        app.addBogie("BG205");
+        app.addBogie("BG309");
+        assertTrue(app.searchBogie("BG205"));
+    }
+
+    @Test
+    public void testSearch_BogieNotFoundAfterValidation() {
+        TrainConsistManagementApp app = new TrainConsistManagementApp();
+        app.addBogie("BG101");
+        app.addBogie("BG205");
+        app.addBogie("BG309");
+        assertFalse(app.searchBogie("BG999"));
+    }
+
+    @Test
+    public void testSearch_SingleElementValidCase() {
+        TrainConsistManagementApp app = new TrainConsistManagementApp();
+        app.addBogie("BG101");
+        assertTrue(app.searchBogie("BG101"));
     }
 }
